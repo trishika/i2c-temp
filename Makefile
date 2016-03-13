@@ -1,4 +1,4 @@
-CC =gcc
+CC=gcc
 DEBUG=yes
 
 # définition des cibles particulières
@@ -13,18 +13,14 @@ endif
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 
-LIB=i2c_tmp102.so
 EXEC=tmp102
 SEXEC=stmp102
 MAIN=i2c_tmp102_out
 
 # Regle principale
-all: $(OBJ) $(LIB) $(EXEC)
+all: $(OBJ) $(EXEC)
 
-$(LIB): $(OBJ)
-	$(CC) $(CFLAGS) -shared -o $@ $^
-
-$(EXEC): $(OBJ) $(LIB)
+$(EXEC): $(OBJ)
 	$(CXX) $(CFLAGS) -o $@ $^
 
 # Compilation des sources c
@@ -35,7 +31,6 @@ $(EXEC): $(OBJ) $(LIB)
 %.o: %.h
 
 install:
-	cp $(LIB) /usr/local/lib/
 	cp $(EXEC) /usr/local/bin/
 	cp $(SEXEC) /usr/local/bin/
 
