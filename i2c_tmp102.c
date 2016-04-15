@@ -65,9 +65,14 @@ int read_i2c(char* filename, int address, double* temp)
             {
                     int res;
                     lsb = buf[0];
+
                     res = (msb<<8) | lsb;
-                    res >>= 4;
-                    *temp = res*0.0625;
+                    res >>= 4; //The TMP102 temperature registers are left justified, correctly right justify them
+
+					//The tmp102 does twos compliment but has the negative bit in the wrong spot, so test for it and correct if needed
+					if(res & (1<<11))
+						res |= 0xF800; //Set bits 11 to 15 to 1s to get this reading into real twos compliment
+                    *temp = res*0.0625; // to celsius, /16
                     //printf("The temperature given at i2c addr %x is: %f \n",address, res*0.0625);
             }
     }
