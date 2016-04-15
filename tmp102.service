@@ -1,0 +1,10 @@
+[Unit]
+Description=TMP102 server deamon
+
+[Service]
+ExecStart=/usr/local/bin/ServerTMP102.py
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
